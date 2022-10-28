@@ -115,35 +115,16 @@ describe('API testing', () => {
         it("should delete user", (done) => {
             chai.request(app)
             .delete('/delete')
-            .send({name: 'user1', role: 'viewer'})
             .end((err, res) => {
                 res.should.have.status(200);
                 done();
             })
         })
-        it("should delete user", (done) => {
+        it("empty users should give error", (done) => {
             chai.request(app)
             .delete('/delete')
-            .send({name: 'user2', role: 'viewer'})
-            .end((err, res) => {
-                res.should.have.status(200);
-                done();
-            })
-        })
-        it("should delete user", (done) => {
-            chai.request(app)
-            .delete('/delete')
-            .send({name: 'user1', role: 'viewer'})
             .end((err, res) => {
                 res.should.have.status(405);
-                done();
-            })
-        })
-        it("empty name should give error", (done) => {
-            chai.request(app)
-            .delete('/delete')
-            .end((err, res) => {
-                res.should.have.status(400);
                 done();
             })
         })

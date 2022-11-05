@@ -16,7 +16,7 @@ app.options('*', cors())
 var client;
 
 async function connect() {
-    client = await MongoClient.connect('mongodb://localhost:27017/');
+    client = await MongoClient.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/');
     const collections = await client.db().listCollections().toArray();
     const containsUsers = collections.map(c => c.name).includes('users');
     if (containsUsers) {

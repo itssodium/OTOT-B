@@ -35,12 +35,10 @@ connect().then(() => {
 
 //gcloud app deploy would give the link to frontend
 app.get('/get', async (req, res) => {
-    connect().then(async () => {
         const db = client.db();
         const collection = db.collection('users');
         const users_mongo = await collection.find().toArray();
         const isEmpty = users_mongo.length === 0
-        console.log(isEmpty);
         if (isEmpty) {
             res.status(204).send('no users present');
         } else {
@@ -50,7 +48,6 @@ app.get('/get', async (req, res) => {
             });
             res.status(200).send(`Users are ${names.toString()}`);
         }
-    });
 })
 
 app.post('/post', async (req, res) => {

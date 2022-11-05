@@ -17,14 +17,13 @@ describe('API testing', () => {
     })
 
     describe("GET before POST", () => {
-        it("should return no users", async (done) => {
-            const response = await chai.request(app).get('/get');
-            response.should.have.status(204);
-            done();
-            /*.end((err, res) => {
+        it("should return no users", (done) => {
+            chai.request(app)
+            .get('/get')
+            .end((err, res) => {
                 res.should.have.status(204);
                 done();
-            })*/
+            })
         })
     })
 

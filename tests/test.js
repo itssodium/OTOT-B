@@ -6,12 +6,22 @@ chai.use(chaiHttp);
 chai.should();
 
 describe('API testing', () => {
-    describe("GET", () => {
-        it("should return users", (done) => {
+    describe("DELETE before starting", () => { //just to delete existing users not used for testing
+        it("does not do anything", (done) => {
+            chai.request(app)
+            .delete('/delete')
+            .end((err, res) => {
+                done();
+            })
+        })
+    })
+
+    describe("GET before POST", () => {
+        it("should return no users", (done) => {
             chai.request(app)
             .get('/get')
             .end((err, res) => {
-                res.should.have.status(200);
+                res.should.have.status(204);
                 done();
             })
         })
@@ -21,7 +31,7 @@ describe('API testing', () => {
         it("should add user", (done) => {
             chai.request(app)
             .post('/post')
-            .send({name: 'user2', role: 'viewer'})
+            .send({name: 'user1', role: 'viewer'})
             .end((err, res) => {
                 res.should.have.status(201);
                 done();
@@ -30,7 +40,7 @@ describe('API testing', () => {
         it("should not add user", (done) => {
             chai.request(app)
             .post('/post')
-            .send({name: 'user2', role: 'viewer'})
+            .send({name: 'user1', role: 'viewer'})
             .end((err, res) => {
                 res.should.have.status(208);
                 done();
@@ -64,6 +74,17 @@ describe('API testing', () => {
         })
     })
 
+    describe("GET after POST", () => {
+        it("should return no users", (done) => {
+            chai.request(app)
+            .get('/get')
+            .end((err, res) => {
+                res.should.have.status(200);
+                done();
+            })
+        })
+    })
+
     describe("PUT", () => {
         it("should update user", (done) => {
             chai.request(app)
@@ -79,7 +100,7 @@ describe('API testing', () => {
             .put('/put')
             .send({name: 'user3', role: 'viewer'})
             .end((err, res) => {
-                res.should.have.status(204);
+                res.should.have.status(404);
                 done();
             })
         })
@@ -124,7 +145,7 @@ describe('API testing', () => {
             chai.request(app)
             .delete('/delete')
             .end((err, res) => {
-                res.should.have.status(405);
+                res.should.have.status(204);
                 done();
             })
         })

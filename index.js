@@ -31,7 +31,7 @@ connect().then(() => console.log('connected'))
 
 //gcloud app deploy would give the link to frontend
 app.get('/get', async (req, res) => {
-    const db = await client.db();
+    const db = client.db();
     const collection = db.collection('users');
     const users_mongo = await collection.find().toArray();
     const isEmpty = users_mongo.length === 0

@@ -95,21 +95,18 @@ app.put('/put', async (req, res) => {
 })
 
 app.delete('/delete', async (req, res) => {
-    /*client.db().then((db) => {
-        const collection = db.collection('users');
-        collection.find().toArray().then(users => {
-            const isEmpty = users.length == 0;
-            if (isEmpty) {
-                res.status(204).send('no users to delete');
-            } else {
-                collection.remove().then((value) => {
-                    res.status(200).send(`users are deleted`);
-                });
-            }
-        })
-    })*/
+    client.db().collection('users').find().toArray().then(arr => {
+        const isEmpty = users_mongo.length === 0
+        if (isEmpty) {
+            res.status(204).send('no users to delete');
+        } else {
+            collection.remove().then((value) => {
+                res.status(200).send(`users are deleted`);
+            });
+        }
+    });
 
-    const db = await client.db();
+    /*const db = await client.db();
     const collection = db.collection('users');
     const users_mongo = await collection.find().toArray();
     const isEmpty = users_mongo.length === 0
@@ -119,7 +116,7 @@ app.delete('/delete', async (req, res) => {
         collection.remove().then((value) => {
             res.status(200).send(`users are deleted`);
         });
-    }
+    }*/
 })
 
 app.listen(process.env.PORT || 5000)

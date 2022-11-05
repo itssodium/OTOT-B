@@ -14,20 +14,25 @@ app.use(cors(corsOptions));
 app.options('*', cors())
 
 var client;
+var collection;
+
 async function connect() {
     client = await MongoClient.connect('mongodb://localhost:27017/');
     const collections = await client.db().listCollections().toArray();
     const containsUsers = collections.map(c => c.name).includes('users');
     if (containsUsers) {
+        const db = await client.db();
+        collection = db.collection('users');
         console.log('contains')
     } else {
         const db = await client.db();
         db.createCollection('users');
+        collection = db.collection('users');
         console.log('created')
     }
 }
 
-connect().then(() => console.log('connected'))
+connect().then(() => console.log('connected'));
 
 //gcloud app deploy would give the link to frontend
 app.get('/get', async (req, res) => {
@@ -96,7 +101,7 @@ app.put('/put', async (req, res) => {
 
 app.delete('/delete', async (req, res) => {
     client.db().collection('users').find().toArray().then(arr => {
-        const isEmpty = users_mongo.length === 0
+        const isEmpty = arr.length === 0
         if (isEmpty) {
             res.status(204).send('no users to delete');
         } else {

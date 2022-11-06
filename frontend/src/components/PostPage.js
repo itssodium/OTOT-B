@@ -16,7 +16,6 @@ function PostPage() {
                 setOutput('Please fill up name and/or role')
             }
         })
-        console.log(res);
         setOutput(res.data);
         
     }

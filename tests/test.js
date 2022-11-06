@@ -21,7 +21,7 @@ describe('API testing', () => {
             chai.request(app)
             .get('/get')
             .end((err, res) => {
-                res.should.have.status(204);
+                res.should.have.status(404);
                 done();
             })
         })
@@ -145,7 +145,7 @@ describe('API testing', () => {
             chai.request(app)
             .delete('/delete')
             .end((err, res) => {
-                res.should.have.status(204);
+                res.should.have.status(404);
                 done();
             })
         })

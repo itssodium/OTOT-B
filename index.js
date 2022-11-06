@@ -13,8 +13,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options('*', cors())
 
-var rawUserInfo = fs.readFileSync('./data.json');
-var userInfo = JSON.parse(rawUserInfo);
+var userInfo = []
 
 //gcloud app deploy would give the link to frontend
 app.get('/get', async (req, res) => {
@@ -44,8 +43,6 @@ app.post('/post', async (req, res) => {
     } else {
         const data = {name: name, role: role};
         userInfo.push(data);
-        var newRawUserInfo = JSON.stringify(userInfo);
-        fs.writeFileSync('./data.json', newRawUserInfo);
         res.status(201).send(`${name} added`)
     }
 })
@@ -66,8 +63,6 @@ app.put('/put', async (req, res) => {
                 user.role = role;
             }
         })
-        var newRawUserInfo = JSON.stringify(userInfo);
-        fs.writeFileSync('./data.json', newRawUserInfo);
         res.status(200).send(`${name} role is changed`)
     } else {
         res.status(404).send(`${name} is not present, use POST to add user`);
@@ -80,8 +75,6 @@ app.delete('/delete', async (req, res) => {
         res.status(404).send('no users to delete');
     } else {
         userInfo = []
-        var newRawUserInfo = JSON.stringify(userInfo);
-        fs.writeFileSync('./data.json', newRawUserInfo);
         res.status(200).send(`users are deleted`);
     }
 })

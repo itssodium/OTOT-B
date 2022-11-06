@@ -20,7 +20,7 @@ var userInfo = JSON.parse(rawUserInfo);
 app.get('/get', async (req, res) => {
         const isEmpty = userInfo.length === 0
         if (isEmpty) {
-            res.status(204).send('no users present');
+            res.status(404).send('no users present');
         } else {
             const names = userInfo.map(user => {
                 return `Name: ${user.name}, Role: ${user.role}`
@@ -77,7 +77,7 @@ app.put('/put', async (req, res) => {
 app.delete('/delete', async (req, res) => {
     const isEmpty = userInfo.length === 0
     if (isEmpty) {
-        res.status(204).send('no users to delete');
+        res.status(404).send('no users to delete');
     } else {
         userInfo = []
         var newRawUserInfo = JSON.stringify(userInfo);

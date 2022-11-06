@@ -17,7 +17,6 @@ function PostPage() {
             }
         })
         setOutput(res.data);
-        
     }
 
     return (

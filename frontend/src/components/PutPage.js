@@ -8,16 +8,16 @@ function PutPage() {
     const [output, setOutput] = useState("")
 
     const getFunction = async () => {
-        //const res = axios.get('https://safe-tundra-60057.herokuapp.com/get')
         const res = await axios.put('https://task-b3-366508.as.r.appspot.com/put', {
                 "name": name,
                 "role": role
         }).catch((err) => {
             if (err.response.status === 400) {
                 setOutput('Please fill up name and/or role')
+            } else {
+                setOutput(`${name} is not present, use POST to add user`)
             }
         })
-        //const res = await axios.get('https://task-b3-366508.as.r.appspot.com/get')
         setOutput(res.data);
     }
 

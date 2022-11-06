@@ -6,9 +6,12 @@ function GetPage() {
     const [output, setOutput] = useState("")
 
     const getFunction = async () => {
-        //const res = axios.get('https://safe-tundra-60057.herokuapp.com/get')
-        const res = await axios.get('https://task-b3-366508.as.r.appspot.com/get')
-        //const res = await axios.get('https://task-b3-366508.as.r.appspot.com/get', {name:'user1'})
+        const res = await axios.get('https://task-b3-366508.as.r.appspot.com/get').catch((err) => {
+            if (err.response.status === 404) {
+                setOutput('There are no users to show')
+            }
+        })
+        
         setOutput(res.data);
     }
     return (

@@ -8,7 +8,6 @@ function PostPage() {
     const [output, setOutput] = useState("")
 
     const getFunction = async () => {
-        //const res = axios.get('https://safe-tundra-60057.herokuapp.com/get')
         const res = await axios.post('https://task-b3-366508.as.r.appspot.com/post', {
                 "name": name,
                 "role": role
@@ -17,9 +16,9 @@ function PostPage() {
                 setOutput('Please fill up name and/or role')
             }
         })
-        //const res = await axios.get('https://task-b3-366508.as.r.appspot.com/get')
-        if (res)
-        setOutput(res.data);
+        if (res) {
+            setOutput(res.data);
+        }
     }
 
     return (
